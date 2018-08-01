@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hello-canary
+  namespace: handson
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: helloworld-k8s
+    spec:
+      containers:
+        - name: helloworld-k8s
+          image: gcr.io/sensedia-portal/helloworld-k8s:1.0
+          ports:
+            - containerPort: 8888
+          resources:
+            limits:
+              cpu: 0.2
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8888
+            periodSeconds: 5
+            timeoutSeconds: 5
+            successThreshold: 5
+            failureThreshold: 10

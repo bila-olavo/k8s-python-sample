@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: "hello-world"
+  namespace: "handson"
+  labels:
+    app: svc-helloworld
+spec:
+  selector:
+    app: "helloworld-k8s"
+  ports:
+    - name: http 
+      protocol: TCP
+      port: 8888
+  type: NodePort
